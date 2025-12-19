@@ -1,0 +1,19 @@
+{
+  "version": "1",
+  "name": "toy-big-table",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ],
+  "size": 0,
+  "filesCount": 0,
+  "protobuf": {
+    "protoFiles": [
+      {
+        "path": "../../../proto/tablet.proto",
+        "type": "file"
+      }
+    ]
+  }
+}

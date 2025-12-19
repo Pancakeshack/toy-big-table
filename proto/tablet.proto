@@ -9,10 +9,9 @@ service TabletServer {
   rpc ReadRows(ReadRowsRequest) returns (stream ReadRowsResponse);
 }
 
-
 message MutateRowRequest {
   string table_name = 1;
-  bytes row_key = 2;
+  string row_key = 2;
   repeated Mutation mutations = 3;
 }
 
@@ -28,24 +27,22 @@ message Mutation {
 
 message SetCell {
   string family_name = 1;
-  bytes column_qualifier = 2;
-  int64 timestamp_micros = 3; // -1 for "now"
-  bytes value = 4;
+  string column_qualifier = 2;
+  int64 timestamp_micros = 3;
+  string value = 4; 
 }
 
 message DeleteFromColumn {
   string family_name = 1;
-  bytes column_qualifier = 2;
+  string column_qualifier = 2;
 }
 
 message DeleteFromRow {}
 
-
 message ReadRowsRequest {
   string table_name = 1;
-  bytes start_row_key = 2;
-  bytes end_row_key = 3; 
-  
+  string start_row_key = 2;
+  string end_row_key = 3;   
   int32 limit_rows = 4;
 }
 
@@ -54,7 +51,7 @@ message ReadRowsResponse {
 }
 
 message Row {
-  bytes key = 1;
+  string key = 1;
   repeated Family families = 2;
 }
 
@@ -64,11 +61,11 @@ message Family {
 }
 
 message Column {
-  bytes qualifier = 1;
+  string qualifier = 1;
   repeated Cell cells = 2;
 }
 
 message Cell {
   int64 timestamp_micros = 1;
-  bytes value = 2;
+  string value = 2; 
 }

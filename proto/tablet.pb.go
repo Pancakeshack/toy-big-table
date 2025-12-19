@@ -24,7 +24,7 @@ const (
 type MutateRowRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TableName     string                 `protobuf:"bytes,1,opt,name=table_name,json=tableName,proto3" json:"table_name,omitempty"`
-	RowKey        []byte                 `protobuf:"bytes,2,opt,name=row_key,json=rowKey,proto3" json:"row_key,omitempty"`
+	RowKey        string                 `protobuf:"bytes,2,opt,name=row_key,json=rowKey,proto3" json:"row_key,omitempty"`
 	Mutations     []*Mutation            `protobuf:"bytes,3,rep,name=mutations,proto3" json:"mutations,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -67,11 +67,11 @@ func (x *MutateRowRequest) GetTableName() string {
 	return ""
 }
 
-func (x *MutateRowRequest) GetRowKey() []byte {
+func (x *MutateRowRequest) GetRowKey() string {
 	if x != nil {
 		return x.RowKey
 	}
-	return nil
+	return ""
 }
 
 func (x *MutateRowRequest) GetMutations() []*Mutation {
@@ -226,9 +226,9 @@ func (*Mutation_DeleteFromRow) isMutation_Mutation() {}
 type SetCell struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	FamilyName      string                 `protobuf:"bytes,1,opt,name=family_name,json=familyName,proto3" json:"family_name,omitempty"`
-	ColumnQualifier []byte                 `protobuf:"bytes,2,opt,name=column_qualifier,json=columnQualifier,proto3" json:"column_qualifier,omitempty"`
-	TimestampMicros int64                  `protobuf:"varint,3,opt,name=timestamp_micros,json=timestampMicros,proto3" json:"timestamp_micros,omitempty"` // -1 for "now"
-	Value           []byte                 `protobuf:"bytes,4,opt,name=value,proto3" json:"value,omitempty"`
+	ColumnQualifier string                 `protobuf:"bytes,2,opt,name=column_qualifier,json=columnQualifier,proto3" json:"column_qualifier,omitempty"`
+	TimestampMicros int64                  `protobuf:"varint,3,opt,name=timestamp_micros,json=timestampMicros,proto3" json:"timestamp_micros,omitempty"`
+	Value           string                 `protobuf:"bytes,4,opt,name=value,proto3" json:"value,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -270,11 +270,11 @@ func (x *SetCell) GetFamilyName() string {
 	return ""
 }
 
-func (x *SetCell) GetColumnQualifier() []byte {
+func (x *SetCell) GetColumnQualifier() string {
 	if x != nil {
 		return x.ColumnQualifier
 	}
-	return nil
+	return ""
 }
 
 func (x *SetCell) GetTimestampMicros() int64 {
@@ -284,17 +284,17 @@ func (x *SetCell) GetTimestampMicros() int64 {
 	return 0
 }
 
-func (x *SetCell) GetValue() []byte {
+func (x *SetCell) GetValue() string {
 	if x != nil {
 		return x.Value
 	}
-	return nil
+	return ""
 }
 
 type DeleteFromColumn struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	FamilyName      string                 `protobuf:"bytes,1,opt,name=family_name,json=familyName,proto3" json:"family_name,omitempty"`
-	ColumnQualifier []byte                 `protobuf:"bytes,2,opt,name=column_qualifier,json=columnQualifier,proto3" json:"column_qualifier,omitempty"`
+	ColumnQualifier string                 `protobuf:"bytes,2,opt,name=column_qualifier,json=columnQualifier,proto3" json:"column_qualifier,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -336,11 +336,11 @@ func (x *DeleteFromColumn) GetFamilyName() string {
 	return ""
 }
 
-func (x *DeleteFromColumn) GetColumnQualifier() []byte {
+func (x *DeleteFromColumn) GetColumnQualifier() string {
 	if x != nil {
 		return x.ColumnQualifier
 	}
-	return nil
+	return ""
 }
 
 type DeleteFromRow struct {
@@ -382,8 +382,8 @@ func (*DeleteFromRow) Descriptor() ([]byte, []int) {
 type ReadRowsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TableName     string                 `protobuf:"bytes,1,opt,name=table_name,json=tableName,proto3" json:"table_name,omitempty"`
-	StartRowKey   []byte                 `protobuf:"bytes,2,opt,name=start_row_key,json=startRowKey,proto3" json:"start_row_key,omitempty"`
-	EndRowKey     []byte                 `protobuf:"bytes,3,opt,name=end_row_key,json=endRowKey,proto3" json:"end_row_key,omitempty"`
+	StartRowKey   string                 `protobuf:"bytes,2,opt,name=start_row_key,json=startRowKey,proto3" json:"start_row_key,omitempty"`
+	EndRowKey     string                 `protobuf:"bytes,3,opt,name=end_row_key,json=endRowKey,proto3" json:"end_row_key,omitempty"`
 	LimitRows     int32                  `protobuf:"varint,4,opt,name=limit_rows,json=limitRows,proto3" json:"limit_rows,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -426,18 +426,18 @@ func (x *ReadRowsRequest) GetTableName() string {
 	return ""
 }
 
-func (x *ReadRowsRequest) GetStartRowKey() []byte {
+func (x *ReadRowsRequest) GetStartRowKey() string {
 	if x != nil {
 		return x.StartRowKey
 	}
-	return nil
+	return ""
 }
 
-func (x *ReadRowsRequest) GetEndRowKey() []byte {
+func (x *ReadRowsRequest) GetEndRowKey() string {
 	if x != nil {
 		return x.EndRowKey
 	}
-	return nil
+	return ""
 }
 
 func (x *ReadRowsRequest) GetLimitRows() int32 {
@@ -493,7 +493,7 @@ func (x *ReadRowsResponse) GetRow() *Row {
 
 type Row struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Key           []byte                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Key           string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	Families      []*Family              `protobuf:"bytes,2,rep,name=families,proto3" json:"families,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -529,11 +529,11 @@ func (*Row) Descriptor() ([]byte, []int) {
 	return file_proto_tablet_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *Row) GetKey() []byte {
+func (x *Row) GetKey() string {
 	if x != nil {
 		return x.Key
 	}
-	return nil
+	return ""
 }
 
 func (x *Row) GetFamilies() []*Family {
@@ -597,7 +597,7 @@ func (x *Family) GetColumns() []*Column {
 
 type Column struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Qualifier     []byte                 `protobuf:"bytes,1,opt,name=qualifier,proto3" json:"qualifier,omitempty"`
+	Qualifier     string                 `protobuf:"bytes,1,opt,name=qualifier,proto3" json:"qualifier,omitempty"`
 	Cells         []*Cell                `protobuf:"bytes,2,rep,name=cells,proto3" json:"cells,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -633,11 +633,11 @@ func (*Column) Descriptor() ([]byte, []int) {
 	return file_proto_tablet_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *Column) GetQualifier() []byte {
+func (x *Column) GetQualifier() string {
 	if x != nil {
 		return x.Qualifier
 	}
-	return nil
+	return ""
 }
 
 func (x *Column) GetCells() []*Cell {
@@ -650,7 +650,7 @@ func (x *Column) GetCells() []*Cell {
 type Cell struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	TimestampMicros int64                  `protobuf:"varint,1,opt,name=timestamp_micros,json=timestampMicros,proto3" json:"timestamp_micros,omitempty"`
-	Value           []byte                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	Value           string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -692,11 +692,11 @@ func (x *Cell) GetTimestampMicros() int64 {
 	return 0
 }
 
-func (x *Cell) GetValue() []byte {
+func (x *Cell) GetValue() string {
 	if x != nil {
 		return x.Value
 	}
-	return nil
+	return ""
 }
 
 var File_proto_tablet_proto protoreflect.FileDescriptor
@@ -707,7 +707,7 @@ const file_proto_tablet_proto_rawDesc = "" +
 	"\x10MutateRowRequest\x12\x1d\n" +
 	"\n" +
 	"table_name\x18\x01 \x01(\tR\ttableName\x12\x17\n" +
-	"\arow_key\x18\x02 \x01(\fR\x06rowKey\x124\n" +
+	"\arow_key\x18\x02 \x01(\tR\x06rowKey\x124\n" +
 	"\tmutations\x18\x03 \x03(\v2\x16.tabletserver.MutationR\tmutations\"-\n" +
 	"\x11MutateRowResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xe1\x01\n" +
@@ -720,35 +720,35 @@ const file_proto_tablet_proto_rawDesc = "" +
 	"\aSetCell\x12\x1f\n" +
 	"\vfamily_name\x18\x01 \x01(\tR\n" +
 	"familyName\x12)\n" +
-	"\x10column_qualifier\x18\x02 \x01(\fR\x0fcolumnQualifier\x12)\n" +
+	"\x10column_qualifier\x18\x02 \x01(\tR\x0fcolumnQualifier\x12)\n" +
 	"\x10timestamp_micros\x18\x03 \x01(\x03R\x0ftimestampMicros\x12\x14\n" +
-	"\x05value\x18\x04 \x01(\fR\x05value\"^\n" +
+	"\x05value\x18\x04 \x01(\tR\x05value\"^\n" +
 	"\x10DeleteFromColumn\x12\x1f\n" +
 	"\vfamily_name\x18\x01 \x01(\tR\n" +
 	"familyName\x12)\n" +
-	"\x10column_qualifier\x18\x02 \x01(\fR\x0fcolumnQualifier\"\x0f\n" +
+	"\x10column_qualifier\x18\x02 \x01(\tR\x0fcolumnQualifier\"\x0f\n" +
 	"\rDeleteFromRow\"\x93\x01\n" +
 	"\x0fReadRowsRequest\x12\x1d\n" +
 	"\n" +
 	"table_name\x18\x01 \x01(\tR\ttableName\x12\"\n" +
-	"\rstart_row_key\x18\x02 \x01(\fR\vstartRowKey\x12\x1e\n" +
-	"\vend_row_key\x18\x03 \x01(\fR\tendRowKey\x12\x1d\n" +
+	"\rstart_row_key\x18\x02 \x01(\tR\vstartRowKey\x12\x1e\n" +
+	"\vend_row_key\x18\x03 \x01(\tR\tendRowKey\x12\x1d\n" +
 	"\n" +
 	"limit_rows\x18\x04 \x01(\x05R\tlimitRows\"7\n" +
 	"\x10ReadRowsResponse\x12#\n" +
 	"\x03row\x18\x01 \x01(\v2\x11.tabletserver.RowR\x03row\"I\n" +
 	"\x03Row\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\fR\x03key\x120\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x120\n" +
 	"\bfamilies\x18\x02 \x03(\v2\x14.tabletserver.FamilyR\bfamilies\"L\n" +
 	"\x06Family\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12.\n" +
 	"\acolumns\x18\x02 \x03(\v2\x14.tabletserver.ColumnR\acolumns\"P\n" +
 	"\x06Column\x12\x1c\n" +
-	"\tqualifier\x18\x01 \x01(\fR\tqualifier\x12(\n" +
+	"\tqualifier\x18\x01 \x01(\tR\tqualifier\x12(\n" +
 	"\x05cells\x18\x02 \x03(\v2\x12.tabletserver.CellR\x05cells\"G\n" +
 	"\x04Cell\x12)\n" +
 	"\x10timestamp_micros\x18\x01 \x01(\x03R\x0ftimestampMicros\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\fR\x05value2\xa9\x01\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value2\xa9\x01\n" +
 	"\fTabletServer\x12L\n" +
 	"\tMutateRow\x12\x1e.tabletserver.MutateRowRequest\x1a\x1f.tabletserver.MutateRowResponse\x12K\n" +
 	"\bReadRows\x12\x1d.tabletserver.ReadRowsRequest\x1a\x1e.tabletserver.ReadRowsResponse0\x01B*Z(github.com/pancakeshack/toy-big-table/pbb\x06proto3"

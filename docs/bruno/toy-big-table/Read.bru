@@ -1,0 +1,25 @@
+meta {
+  name: Read
+  type: grpc
+  seq: 2
+}
+
+grpc {
+  url: localhost:50051
+  method: /tabletserver.TabletServer/ReadRows
+  body: grpc
+  protoPath: ../../../proto/tablet.proto
+  auth: inherit
+  methodType: server-streaming
+}
+
+body:grpc {
+  name: message 1
+  content: '''
+    {
+      "table_name": "users",
+      "start_row_key": "user#000001",
+      "end_row_key": "user#000100"
+    }
+  '''
+}

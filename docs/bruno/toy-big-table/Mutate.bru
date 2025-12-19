@@ -1,0 +1,48 @@
+meta {
+  name: Mutate
+  type: grpc
+  seq: 1
+}
+
+grpc {
+  url: localhost:50051
+  method: /tabletserver.TabletServer/MutateRow
+  body: grpc
+  protoPath: ../../../proto/tablet.proto
+  auth: inherit
+  methodType: unary
+}
+
+body:grpc {
+  name: message 1
+  content: '''
+    {
+      "table_name": "users",
+      "row_key": "cG9zdG1hbl91c2Vy",
+      "mutations": [
+        {
+          "set_cell": {
+            "family_name": "profile",
+            "column_qualifier": "c3RhdHVz",
+            "timestamp_micros": "1700000000",
+            "value": "YWN0aXZl"
+          }
+        },
+        {
+          "set_cell": {
+            "family_name": "profile",
+            "column_qualifier": "YXBw", 
+            "timestamp_micros": "1700000000",
+            "value": "cG9zdG1hbg==" 
+          }
+        },
+        {
+          "delete_from_column": {
+            "family_name": "profile",
+            "column_qualifier": "bGVnYWN5"
+          }
+        }
+      ]
+    }
+  '''
+}
