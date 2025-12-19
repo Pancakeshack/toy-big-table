@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+option go_package = "github.com/pancakeshack/toy-big-table/pb";
+
+package tabletserver;
+
+service TabletServer {
+  rpc MutateRow(MutateRowRequest) returns (MutateRowResponse);
+  rpc ReadRows(ReadRowsRequest) returns (stream ReadRowsResponse);
+}
+
+
+message MutateRowRequest {
+  string table_name = 1;
+  bytes row_key = 2;
+  repeated Mutation mutations = 3;
+}
+
+message MutateRowResponse { bool success = 1; }
+
+message Mutation {
+  oneof mutation {
+    SetCell set_cell = 1;
+    DeleteFromColumn delete_from_column = 2;
+    DeleteFromRow delete_from_row = 3;
+  }
+}
+
+message SetCell {
+  string family_name = 1;
+  bytes column_qualifier = 2;
+  int64 timestamp_micros = 3; // -1 for "now"
+  bytes value = 4;
+}
+
+message DeleteFromColumn {
+  string family_name = 1;
+  bytes column_qualifier = 2;
+}
+
+message DeleteFromRow {}
+
+
+message ReadRowsRequest {
+  string table_name = 1;
+  bytes start_row_key = 2;
+  bytes end_row_key = 3; 
+  
+  int32 limit_rows = 4;
+}
+
+message ReadRowsResponse {
+  Row row = 1;
+}
+
+message Row {
+  bytes key = 1;
+  repeated Family families = 2;
+}
+
+message Family {
+  string name = 1;
+  repeated Column columns = 2;
+}
+
+message Column {
+  bytes qualifier = 1;
+  repeated Cell cells = 2;
+}
+
+message Cell {
+  int64 timestamp_micros = 1;
+  bytes value = 2;
+}
